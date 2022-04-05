@@ -1,4 +1,7 @@
-export const todoItem = (title, description, dueDate, priority, notes) => {
+// This file will be used for application logic
+
+export const todoFactory = (title, description, dueDate, priority, notes) => {
+    
     return {
         title,
         description,
@@ -8,8 +11,24 @@ export const todoItem = (title, description, dueDate, priority, notes) => {
     }
 }
 
-export const project = (title) => {
+export const projectFactory = (title) => {
     return {
         title
     }
+}
+
+export const addProject = (projectArray) => {
+    const newProj = projectFactory(prompt(``))
+    projectArray.push(newProj)
+    newProj.itemArray = []
+    console.log(newProj)
+    console.log(projectArray)
+}
+
+export const addTodo = (event, projectArray) => {
+    const newItem = todoFactory(`test`)
+    const index = event.target.getAttribute(`project-index`)
+    const selectObject = projectArray[index]
+    selectObject.itemArray.push(newItem)
+    console.log(selectObject.itemArray)
 }

@@ -7,6 +7,9 @@ module.exports = {
         index: './src/index.js',
     },
     devtool: 'inline-source-map',
+    devServer: {
+      static: './dist',
+    },
     plugins: [
         new HtmlWebpackPlugin({
           template: `./src/index.html`,
