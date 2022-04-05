@@ -13,7 +13,7 @@ const defaultProject = projectFactory(`Starting List`)
 defaultProject.itemArray = []
 let projectArray = [defaultProject]
 
-const display = (() => {
+const display = () => {
     content.innerHTML = ``
     console.log(projectArray)
 
@@ -24,13 +24,26 @@ const display = (() => {
         div.textContent = e.title
         content.appendChild(div)
 
+        const itemContainer = document.createElement(`div`)
+        itemContainer.classList.add(`item-container`)
+        content.appendChild(itemContainer)
+
         const button = document.createElement(`button`)
         button.setAttribute(`project-index`, index)
         button.classList.add(`add-item`)
         button.textContent = `+`
         content.appendChild(button)
+
+        e.itemArray.forEach((e, index) => {
+            const itemDiv = document.createElement(`div`)
+            itemDiv.setAttribute(`item-index`, index)
+            itemDiv.classList.add(`item-title`)
+            itemDiv.textContent = `${e.title}`
+            itemContainer.appendChild(itemDiv)
+        })
     })
-})()
+}
+display()
 
 addProjBtn.addEventListener(`click`, () => {
     addProject(projectArray)
@@ -40,5 +53,6 @@ addProjBtn.addEventListener(`click`, () => {
 document.addEventListener(`click`, (event) => {
     if (event.target.classList.contains(`add-item`)) {
         addTodo(event, projectArray)
+        display()
     }
 })
