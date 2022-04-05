@@ -26,7 +26,7 @@ export const addProject = (projectArray) => {
 }
 
 export const addTodo = (event, projectArray) => {
-    const newItem = todoFactory(`test`)
+    const newItem = todoFactory(`test`, `blah balh blah`, `3/17/2030`, `Urgent`, `blah blah blah`)
     const index = event.target.getAttribute(`project-index`)
     const selectObject = projectArray[index]
     selectObject.itemArray.push(newItem)

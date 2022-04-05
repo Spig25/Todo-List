@@ -35,11 +35,35 @@ const display = () => {
         content.appendChild(button)
 
         e.itemArray.forEach((e, index) => {
-            const itemDiv = document.createElement(`div`)
-            itemDiv.setAttribute(`item-index`, index)
-            itemDiv.classList.add(`item-title`)
-            itemDiv.textContent = `${e.title}`
-            itemContainer.appendChild(itemDiv)
+            const itemTitle = document.createElement(`div`)
+            itemTitle.setAttribute(`item-index`, index)
+            itemTitle.classList.add(`item-title`)
+            itemTitle.textContent = e.title
+            itemContainer.appendChild(itemTitle)
+
+            const itemDesc = document.createElement(`div`)
+            itemDesc.setAttribute(`item-index`, index)
+            itemDesc.classList.add(`item-title`)
+            itemDesc.textContent = `Description: ${e.description}`
+            itemContainer.appendChild(itemDesc)
+
+            const itemDue = document.createElement(`div`)
+            itemDue.setAttribute(`item-index`, index)
+            itemDue.classList.add(`item-title`)
+            itemDue.textContent = `Due Date: ${e.dueDate}`
+            itemContainer.appendChild(itemDue)
+
+            const itemPriority = document.createElement(`div`)
+            itemPriority.setAttribute(`item-index`, index)
+            itemPriority.classList.add(`item-title`)
+            itemPriority.textContent = `Priority: ${e.priority}`
+            itemContainer.appendChild(itemPriority)
+
+            const itemNotes = document.createElement(`div`)
+            itemNotes.setAttribute(`item-index`, index)
+            itemNotes.classList.add(`item-title`)
+            itemNotes.textContent = `Notes: ${e.notes}`
+            itemContainer.appendChild(itemNotes)
         })
     })
 }
