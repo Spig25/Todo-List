@@ -6,6 +6,7 @@ import { todoFactory } from './todo';
 import { addProject } from './todo';
 import { addTodo } from './todo';
 import { deleteTodo } from './todo';
+import { deleteProject } from './todo';
 
 const content = document.querySelector(`.content`)
 const addProjBtn = document.querySelector(`.add-project`)
@@ -41,11 +42,17 @@ const display = () => {
         itemContainer.classList.add(`item-container`)
         projectContainer.appendChild(itemContainer)
 
-        const button = document.createElement(`button`)
-        button.setAttribute(`project-index`, index)
-        button.classList.add(`add-item`)
-        button.textContent = `+`
-        projectContainer.appendChild(button)
+        const addItem = document.createElement(`button`)
+        addItem.setAttribute(`project-index`, index)
+        addItem.classList.add(`add-item`)
+        addItem.textContent = `+Item`
+        projectContainer.appendChild(addItem)
+
+        const deleteProject = document.createElement(`button`)
+        deleteProject.setAttribute(`project-index`, index)
+        deleteProject.classList.add(`delete-project`)
+        deleteProject.textContent = `Delete Project`
+        projectContainer.appendChild(deleteProject)
 
         // Iterates through each project object's itemArray which contains the project's todos and then posts each todo property to the webpage.
         e.itemArray.forEach((e, index) => {
@@ -98,6 +105,13 @@ display()
 addProjBtn.addEventListener(`click`, () => {
     addProject(projectArray)
     display()
+})
+
+document.addEventListener(`click`, (event) => {
+    if (event.target.classList.contains(`delete-project`)) {
+        deleteProject(event, projectArray)
+        display()
+    }
 })
 
 document.addEventListener(`click`, (event) => {

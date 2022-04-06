@@ -25,6 +25,11 @@ export const addProject = (projectArray) => {
     console.log(projectArray)
 }
 
+export const deleteProject = (event, projectArray) => {
+    const projectIndex = event.target.getAttribute(`project-index`)
+    projectArray.splice(projectIndex, 1)
+}
+
 export const addTodo = (event, projectArray) => {
     const newItem = todoFactory(`test`, `blah balh blah`, `3/17/2030`, `Urgent`, `blah blah blah`)
     const index = event.target.getAttribute(`project-index`)
