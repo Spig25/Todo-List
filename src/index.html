@@ -7,6 +7,28 @@
     <title>Todo List</title>
 </head>
 <body>
+    <div class="project-form-container">
+        <form action="post" class="project-form">
+            <label for="title">New Project Title: </label>
+            <input type="text" name="title" id="project-title">
+            <button type="button" class="project-submit"></button>
+        </form>
+    </div>
+    <div class="item-form-container">
+        <form action="post" class="item-form">
+            <label for="title">New To-do Title: </label>
+            <input type="text" name="title" id="item-title">
+            <label for="description">Description: </label>
+            <input type="text" name="description" id="description">
+            <label for="dueDate">Due Date: </label>
+            <input type="date" name="dueDate" id="dueDate">
+            <label for="priority">Priority: </label>
+            <input type="text" name="priority" id="priority">
+            <label for="notes">Notes: </label>
+            <input type="text" name="notes" id="notes">
+            <button type="button" class="item-submit"></button>
+        </form>
+    </div>
     <header>
         Welcome to Spig's Todo App!
     </header>

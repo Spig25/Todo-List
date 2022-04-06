@@ -9,21 +9,14 @@ import { deleteTodo } from './todo';
 import { deleteProject } from './todo';
 
 const content = document.querySelector(`.content`)
-const addProjBtn = document.querySelector(`.add-project`)
+const projectFormContainer = document.querySelector(`.project-form-container`)
 
 const defaultProject = projectFactory(`Starting List`)
 defaultProject.itemArray = []
 let projectArray = [defaultProject]
 
-// const domPost = (indexType, index, textContent, container, key) => {
-//     const div = document.createElement(`div`)
-//     div.setAttribute(`${indexType}-index`, index)
-//     div.classList.add(`${indexType}-${key}`)
-//     div.textContent = textContent
-//     container.appendChild(div)
-// }
 
-const display = () => {
+export const display = () => {
     content.innerHTML = ``
     console.log(projectArray)
 
@@ -50,18 +43,12 @@ const display = () => {
 
         const deleteProject = document.createElement(`button`)
         deleteProject.setAttribute(`project-index`, index)
-        deleteProject.classList.add(`delete-project`)
+        deleteProject.classList.add(`project-delete`)
         deleteProject.textContent = `Delete Project`
         projectContainer.appendChild(deleteProject)
 
         // Iterates through each project object's itemArray which contains the project's todos and then posts each todo property to the webpage.
         e.itemArray.forEach((e, index) => {
-            // domPost(`item`, index, e.title, itemContainer, )
-            // domPost(`item`, index, e.description, itemContainer)
-            // domPost(`item`, index, e.dueDate, itemContainer)
-            // domPost(`item`, index, e.priority, itemContainer)
-            // domPost(`item`, index, e.notes, itemContainer)
-
             const itemTitle = document.createElement(`div`)
             itemTitle.setAttribute(`item-index`, index)
             itemTitle.classList.add(`item-title`)
@@ -102,13 +89,17 @@ const display = () => {
 }
 display()
 
-addProjBtn.addEventListener(`click`, () => {
+document.querySelector(`.project-submit`).addEventListener(`click`, () => {
     addProject(projectArray)
-    display()
+    projectFormContainer.classList.remove(`show`)
+})
+
+document.querySelector(`.add-project`).addEventListener(`click`, () => {
+    projectFormContainer.classList.add(`show`)
 })
 
 document.addEventListener(`click`, (event) => {
-    if (event.target.classList.contains(`delete-project`)) {
+    if (event.target.classList.contains(`project-delete`)) {
         deleteProject(event, projectArray)
         display()
     }

@@ -1,5 +1,7 @@
 // This file will be used for application logic
 
+import { display } from "."
+
 export const todoFactory = (title, description, dueDate, priority, notes) => {
     
     return {
@@ -18,11 +20,12 @@ export const projectFactory = (title) => {
 }
 
 export const addProject = (projectArray) => {
-    const newProj = projectFactory(prompt(``))
+    const newProj = projectFactory(document.querySelector(`#project-title`).value)
     projectArray.push(newProj)
     newProj.itemArray = []
     console.log(newProj)
     console.log(projectArray)
+    display()
 }
 
 export const deleteProject = (event, projectArray) => {
