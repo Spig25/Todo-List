@@ -90,15 +90,13 @@ export const display = () => {
 }
 display()
 
+document.querySelector(`.add-project`).addEventListener(`click`, () => {
+    projectFormContainer.classList.add(`show`)
+})
 document.querySelector(`.project-submit`).addEventListener(`click`, () => {
     addProject(projectArray)
     projectFormContainer.classList.remove(`show`)
 })
-
-document.querySelector(`.add-project`).addEventListener(`click`, () => {
-    projectFormContainer.classList.add(`show`)
-})
-
 document.addEventListener(`click`, (event) => {
     if (event.target.classList.contains(`project-delete`)) {
         deleteProject(event, projectArray)
@@ -106,29 +104,29 @@ document.addEventListener(`click`, (event) => {
     }
 })
 
+// Adding item takes far more code than adding project because there is only one add project button vs many add item buttons. We need to be able to tell addTodo() which project we are adding an item to
 document.addEventListener(`click`, (event) => {
     if (event.target.classList.contains(`add-item`)) {
         itemFormContainer.classList.add(`show`)
         const button = document.createElement(`button`)
         button.classList.add(`item-submit`)
+        button.textContent = `Submit`
         button.type = `button`
-        const projectIndex = event.target.getAttribute(`project-index`)
-        button.setAttribute(`project-index`, projectIndex)
+        // We pass the project index value on from the add-item button to the newly created item-submit button.
+        button.setAttribute(`project-index`, event.target.getAttribute(`project-index`))
         document.querySelector(`.item-form`).appendChild(button)
     }
 })
-
 document.addEventListener(`click`, (event) => {
     if (event.target.classList.contains(`item-submit`)) {
         const button = document.querySelector(`.item-submit`)
         const projectIndex = button.getAttribute(`project-index`)
+        // We use the previously created button value to tell addTodo() which project we are adding a todo item to.
         addTodo(projectIndex, projectArray)
         itemFormContainer.classList.remove(`show`)
         button.remove()
     }
 })
-
-
 document.addEventListener(`click`, (event) => {
     if (event.target.classList.contains(`item-delete`)) {
         deleteTodo(event, projectArray)
