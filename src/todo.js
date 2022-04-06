@@ -33,12 +33,12 @@ export const deleteProject = (event, projectArray) => {
     projectArray.splice(projectIndex, 1)
 }
 
-export const addTodo = (event, projectArray) => {
-    const newItem = todoFactory(`test`, `blah balh blah`, `3/17/2030`, `Urgent`, `blah blah blah`)
-    const index = event.target.getAttribute(`project-index`)
-    const selectObject = projectArray[index]
-    selectObject.itemArray.push(newItem)
-    console.log(selectObject.itemArray)
+export const addTodo = (projectIndex, projectArray) => {
+    const newItem = todoFactory(document.querySelector(`#item-title`).value, document.querySelector(`#item-description`).value, document.querySelector(`#item-dueDate`).value, document.querySelector(`#item-priority`).value, document.querySelector(`#item-notes`).value)
+    const selectedProject = projectArray[projectIndex]
+    selectedProject.itemArray.push(newItem)
+    console.log(selectedProject.itemArray)
+    display()
 }
 
 export const deleteTodo = (event, projectArray) => {

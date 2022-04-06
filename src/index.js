@@ -10,6 +10,7 @@ import { deleteProject } from './todo';
 
 const content = document.querySelector(`.content`)
 const projectFormContainer = document.querySelector(`.project-form-container`)
+const itemFormContainer = document.querySelector(`.item-form-container`)
 
 const defaultProject = projectFactory(`Starting List`)
 defaultProject.itemArray = []
@@ -107,10 +108,26 @@ document.addEventListener(`click`, (event) => {
 
 document.addEventListener(`click`, (event) => {
     if (event.target.classList.contains(`add-item`)) {
-        addTodo(event, projectArray)
-        display()
+        itemFormContainer.classList.add(`show`)
+        const button = document.createElement(`button`)
+        button.classList.add(`item-submit`)
+        button.type = `button`
+        const projectIndex = event.target.getAttribute(`project-index`)
+        button.setAttribute(`project-index`, projectIndex)
+        document.querySelector(`.item-form`).appendChild(button)
     }
 })
+
+document.addEventListener(`click`, (event) => {
+    if (event.target.classList.contains(`item-submit`)) {
+        const button = document.querySelector(`.item-submit`)
+        const projectIndex = button.getAttribute(`project-index`)
+        addTodo(projectIndex, projectArray)
+        itemFormContainer.classList.remove(`show`)
+        button.remove()
+    }
+})
+
 
 document.addEventListener(`click`, (event) => {
     if (event.target.classList.contains(`item-delete`)) {
