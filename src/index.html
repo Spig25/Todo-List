@@ -9,13 +9,15 @@
 <body>
     <div class="project-form-container">
         <form action="post" class="project-form">
+            <button type="button" class="project-cancel">&times;</button>
             <label for="title">New Project Title: </label>
-            <input type="text" name="title" id="project-title">
-            <button type="button" class="project-submit"></button>
+            <input type="text" name="title" id="project-title" required>
+            <button type="button" class="project-submit">Submit</button>
         </form>
     </div>
     <div class="item-form-container">
         <form action="post" class="item-form">
+            <button type="button" class="item-cancel">&times;</button>
             <label for="title">New To-do Title: </label>
             <input type="text" name="title" id="item-title">
             <label for="description">Description: </label>
@@ -26,7 +28,6 @@
             <input type="text" name="priority" id="item-priority">
             <label for="notes">Notes: </label>
             <input type="text" name="notes" id="item-notes">
-            <!-- <button type="button" class="item-submit"></button> -->
         </form>
     </div>
     <header>
@@ -36,6 +37,7 @@
         <button class="add-project">Add New Project</button>
         <div class="content"></div>
     </div>
+    <div class="view"></div>
     <footer>
         
     </footer>

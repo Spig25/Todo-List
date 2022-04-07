@@ -6,10 +6,26 @@
 body {
     display: grid;
     grid-template-rows: 100px 1fr 100px;
+    grid-template-columns: 1fr 1fr;
     height: 100vh;
 }
 
 header {
+    place-self: center;
+    grid-column: span 2;
+}
+
+footer {
+    grid-column: span 2;
+}
+
+.main {
+    display: grid;
+    grid-template-rows: 50px 1fr;
+
+}
+
+.add-project {
     place-self: center;
 }
 
@@ -79,4 +95,32 @@ form {
     box-shadow: 2px 2px 5px rgba(0, 0, 0, .2);
     font-size: 1.5rem;
     align-items: center;
+}
+
+button {
+    padding: 8px 32px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, .2);
+    background-color: rgb(67, 146, 43);
+    border-radius: 10px;
+    border: 0;
+    cursor: pointer;
+    color: #fff;
+    font-weight: bold;
+}
+
+.item-cancel,
+.project-cancel {
+    display: grid;
+    grid-column: 2;
+    justify-self: right;
+    place-items: center;
+    padding: 0px 6px;
+    font-size: 2rem;
+    background-color: rgb(255, 0, 0);
+}
+
+.item-submit,
+.project-submit {
+    grid-column: span 2;
+    place-self: center;
 }
