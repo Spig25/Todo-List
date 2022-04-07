@@ -7,6 +7,29 @@
     <title>Todo List</title>
 <script defer src="index.bundle.js"></script></head>
 <body>
+    <div class="project-form-container">
+        <form action="post" class="project-form">
+            <button type="button" class="project-cancel">&times;</button>
+            <label for="title">New Project Title: </label>
+            <input type="text" name="title" id="project-title" required>
+            <button type="button" class="project-submit">Submit</button>
+        </form>
+    </div>
+    <div class="item-form-container">
+        <form action="post" class="item-form">
+            <button type="button" class="item-cancel">&times;</button>
+            <label for="title">New To-do Title: </label>
+            <input type="text" name="title" id="item-title">
+            <label for="description">Description: </label>
+            <input type="text" name="description" id="item-description">
+            <label for="dueDate">Due Date: </label>
+            <input type="date" name="dueDate" id="item-dueDate">
+            <label for="priority">Priority: </label>
+            <input type="text" name="priority" id="item-priority">
+            <label for="notes">Notes: </label>
+            <input type="text" name="notes" id="item-notes">
+        </form>
+    </div>
     <header>
         Welcome to Spig's Todo App!
     </header>
@@ -14,6 +37,7 @@
         <button class="add-project">Add New Project</button>
         <div class="content"></div>
     </div>
+    <div class="view"></div>
     <footer>
         
     </footer>
