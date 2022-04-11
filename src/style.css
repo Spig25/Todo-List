@@ -6,7 +6,7 @@
 body {
     display: grid;
     grid-template-rows: 100px 1fr 100px;
-    grid-template-columns: 250px 1fr;
+    grid-template-columns: 400px 1fr;
     height: 100vh;
 }
 
@@ -22,7 +22,6 @@ footer {
 .main {
     display: grid;
     grid-template-rows: 50px 1fr;
-
 }
 
 .add-project {
@@ -30,25 +29,43 @@ footer {
 }
 
 .content {
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
     gap: 10px;
     padding: 15px;
 }
 
 .project-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 2rem;
     user-select: none;
+    max-width: 400px;
+    align-self: start;
 }
 
 .project-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0px 15px 10px -18px #111;
+    padding: 5px;
 }
 
 .item-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 1.5rem;
 }
 
 .item-container {
-    display: grid;
+    width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    flex-direction: column;
     gap: 5px;
 }
 
@@ -115,6 +132,11 @@ button {
     cursor: pointer;
     color: #fff;
     font-weight: bold;
+}
+
+.item-delete,
+.project-delete {
+    background-color: red;
 }
 
 .item-cancel,

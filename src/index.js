@@ -7,6 +7,7 @@ import { projectFactory, addTodo, addProject, deleteProject, deleteTodo } from '
 const content = document.querySelector(`.content`)
 const projectFormContainer = document.querySelector(`.project-form-container`)
 const itemFormContainer = document.querySelector(`.item-form-container`)
+const view = document.querySelector(`.view`)
 
 const defaultProject = projectFactory(`Starting List`)
 let projectArray = [defaultProject]
@@ -174,16 +175,18 @@ document.querySelector(`.item-cancel`).addEventListener(`click`, () => {
 document.addEventListener(`click`, (event) => {
     if (event.target.classList.contains(`project-title`)) {
         const projectIndex = event.target.getAttribute(`project-index`)
-        const itemContainer = document.querySelector(`.item-container`)
-        if (itemContainer.getAttribute(`project-index`) === projectIndex){
-            if (itemContainer.style.display === `none`) {
-                itemContainer.style.display = `grid`
+        const itemContainer = document.querySelectorAll(`.item-container`)
+        // Iterates through node list of item-containers until we reach the one we clicked on then executes our dropdown style change.
+        itemContainer.forEach((e) => {
+            if (e.getAttribute(`project-index`) === projectIndex){
+                if (e.style.display === `none`) {
+                    e.style.display = `flex`
+                }
+                else {
+                    e.style.display = `none`
+                }
             }
-            else {
-                itemContainer.style.display = `none`
-            }
-        }
-        
+        })
     }
 })
 
