@@ -37,8 +37,8 @@ export const addTodo = (projectIndex, projectArray) => {
 }
 
 export const deleteTodo = (event, projectArray) => {
-     // We go up parent elements twice from the delete button to select the project index div and get its correlated project index position
-     const projectIndex = event.target.parentElement.parentElement.getAttribute(`project-index`)
+     // We go up parent elements from the delete button to select the project index div and get its correlated project index position
+     const projectIndex = event.target.parentElement.getAttribute(`project-index`)
      // We select the delete button to get its correlated item index posiition
      const itemIndex = event.target.getAttribute(`item-index`)
      // Then we select the correct project object inside the project array
