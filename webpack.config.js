@@ -5,6 +5,7 @@ module.exports = {
     mode: 'development',
     entry: {
         index: './src/index.js',
+        todo: `./src/todo.js`,
     },
     devtool: 'inline-source-map',
     devServer: {
@@ -28,7 +29,7 @@ module.exports = {
           },
           {
             test: /\.(png|svg|jpg|jpeg|gif)$/i,
-            type: 'asset/resource',
+            type: 'asset/resource',    
           },
         ],
     },

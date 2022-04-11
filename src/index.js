@@ -1,19 +1,14 @@
 // This file will be used to manipulate DOM
 
 import './style.css';
-import { projectFactory, removeTodo } from './todo';
-import { todoFactory } from './todo';
-import { addProject } from './todo';
-import { addTodo } from './todo';
-import { deleteTodo } from './todo';
-import { deleteProject } from './todo';
+import { projectFactory, addTodo, addProject, deleteProject, deleteTodo } from './todo';
+// import icon from `../src/noun-down-arrow-1786976.png`
 
 const content = document.querySelector(`.content`)
 const projectFormContainer = document.querySelector(`.project-form-container`)
 const itemFormContainer = document.querySelector(`.item-form-container`)
 
 const defaultProject = projectFactory(`Starting List`)
-defaultProject.itemArray = []
 let projectArray = [defaultProject]
 
 
@@ -24,15 +19,24 @@ export const display = () => {
     projectArray.forEach((e, index) => {
         const projectContainer = document.createElement(`div`)
         projectContainer.setAttribute(`project-index`, index)
+        projectContainer.classList.add(`project-container`)
         content.appendChild(projectContainer)
 
-        const div = document.createElement(`div`)
-        div.setAttribute(`project-index`, index)
-        div.classList.add(`project-title`)
-        div.textContent = e.title
-        projectContainer.appendChild(div)
+        const projectTitle = document.createElement(`div`)
+        projectTitle.setAttribute(`project-index`, index)
+        projectTitle.classList.add(`project-title`)
+        projectContainer.appendChild(projectTitle)
+            const titleText = document.createElement(`div`)
+            titleText.setAttribute(`project-index`, index)
+            titleText.classList.add(`project-title`)
+            titleText.textContent = e.title
+            projectTitle.appendChild(titleText)
+            // const dropdown = document.createElement(`img`)
+            // dropdown.src = `../src/noun-down-arrow-1786976.png`
+            // projectTitle.appendChild(dropdown)
 
         const itemContainer = document.createElement(`div`)
+        itemContainer.setAttribute(`project-index`, index)
         itemContainer.classList.add(`item-container`)
         projectContainer.appendChild(itemContainer)
 
@@ -99,24 +103,26 @@ export const display = () => {
 display()
 
 // When project/item form is submitted/cancelled out we run this function. Created this so that if future form cancel/submit logic needs to be changed it can all be done right here
-const formExit = (formContainer, addOrRemove) => {
+const formOpenOrExit = (formContainer, addOrRemove) => {
     if (addOrRemove === `add`) {
         formContainer.classList.add(`show`)
     }
     if (addOrRemove === `remove`) {
         formContainer.classList.remove(`show`)
         if (formContainer === itemFormContainer) {
+            // Each time item modal is displayed, a submit button is created. This makes sure it is deleted upon modal closure. This ensures that we dont keep adding submit buttons onto the modal infinitely.
             document.querySelector(`.item-submit`).remove()
         }
     }
 }
 
 document.querySelector(`.add-project`).addEventListener(`click`, () => {
-    formExit(projectFormContainer, `add`)
+    formOpenOrExit(projectFormContainer, `add`)
 })
 document.querySelector(`.project-submit`).addEventListener(`click`, () => {
     addProject(projectArray)
-    formExit(projectFormContainer, `remove`)
+    display()
+    formOpenOrExit(projectFormContainer, `remove`)
 })
 document.addEventListener(`click`, (event) => {
     if (event.target.classList.contains(`project-delete`)) {
@@ -125,13 +131,15 @@ document.addEventListener(`click`, (event) => {
     }
 })
 document.querySelector(`.project-cancel`).addEventListener(`click`, () => {
-    formExit(projectFormContainer, `remove`)
+    formOpenOrExit(projectFormContainer, `remove`)
 })
 
 // Adding item takes far more code than adding project because there is only one add project button vs many add item buttons. We need to be able to tell addTodo() which project we are adding an item to
 document.addEventListener(`click`, (event) => {
     if (event.target.classList.contains(`add-item`)) {
-        formExit(itemFormContainer, `add`)
+        // Prevents add item button from being accessed with spacebar whilst inside of modal
+        document.querySelector(`.add-item`).disabled = true
+        formOpenOrExit(itemFormContainer, `add`)
         const button = document.createElement(`button`)
         button.classList.add(`item-submit`)
         button.textContent = `Submit`
@@ -147,7 +155,8 @@ document.addEventListener(`click`, (event) => {
         const projectIndex = button.getAttribute(`project-index`)
         // We use the previously created button value to tell addTodo() which project we are adding a todo item to.
         addTodo(projectIndex, projectArray)
-        formExit(itemFormContainer, `remove`)
+        display()
+        formOpenOrExit(itemFormContainer, `remove`)
     }
 })
 document.addEventListener(`click`, (event) => {
@@ -157,6 +166,30 @@ document.addEventListener(`click`, (event) => {
     }
 })
 document.querySelector(`.item-cancel`).addEventListener(`click`, () => {
-    formExit(itemFormContainer, `remove`)
+    formOpenOrExit(itemFormContainer, `remove`)
+    document.querySelector(`.add-item`).disabled = false
 })
 
+// This controls dropdown functionality when clicking on a project
+document.addEventListener(`click`, (event) => {
+    if (event.target.classList.contains(`project-title`)) {
+        const projectIndex = event.target.getAttribute(`project-index`)
+        const itemContainer = document.querySelector(`.item-container`)
+        if (itemContainer.getAttribute(`project-index`) === projectIndex){
+            if (itemContainer.style.display === `none`) {
+                itemContainer.style.display = `grid`
+            }
+            else {
+                itemContainer.style.display = `none`
+            }
+        }
+        
+    }
+})
+
+// Disabled enter key
+document.addEventListener(`keypress`, (event) => {
+    if (event.keyCode === 13) {
+        event.preventDefault()
+    }
+})
