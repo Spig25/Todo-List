@@ -43,6 +43,7 @@ footer {
     user-select: none;
     max-width: 400px;
     align-self: start;
+    width: 100%;
 }
 
 .project-container {
@@ -60,8 +61,11 @@ footer {
     font-size: 1.5rem;
 }
 
+.item-delete {
+    align-self: flex-start;
+}
+
 .item-container {
-    width: 300px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: flex;

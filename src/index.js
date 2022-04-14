@@ -15,20 +15,21 @@ let projectArray = [defaultProject]
 
 export const display = () => {
     content.innerHTML = ``
+    view.innerHTML = ``
     console.log(projectArray)
 
-    projectArray.forEach((e, index) => {
+    projectArray.forEach((e, projectIndex) => {
         const projectContainer = document.createElement(`div`)
-        projectContainer.setAttribute(`project-index`, index)
+        projectContainer.setAttribute(`project-index`, projectIndex)
         projectContainer.classList.add(`project-container`)
         content.appendChild(projectContainer)
 
         const projectTitle = document.createElement(`div`)
-        projectTitle.setAttribute(`project-index`, index)
+        projectTitle.setAttribute(`project-index`, projectIndex)
         projectTitle.classList.add(`project-title`)
         projectContainer.appendChild(projectTitle)
             const titleText = document.createElement(`div`)
-            titleText.setAttribute(`project-index`, index)
+            titleText.setAttribute(`project-index`, projectIndex)
             titleText.classList.add(`project-title`)
             titleText.textContent = e.title
             projectTitle.appendChild(titleText)
@@ -37,33 +38,39 @@ export const display = () => {
             // projectTitle.appendChild(dropdown)
 
         const itemContainer = document.createElement(`div`)
-        itemContainer.setAttribute(`project-index`, index)
+        itemContainer.setAttribute(`project-index`, projectIndex)
         itemContainer.classList.add(`item-container`)
-        projectContainer.appendChild(itemContainer)
+        view.appendChild(itemContainer)
+
+        const viewTitle = document.createElement(`div`)
+        viewTitle.setAttribute(`project-index`, projectIndex)
+        viewTitle.classList.add(`project-title`)
+        viewTitle.textContent = e.title
+        itemContainer.appendChild(viewTitle)
 
         const addItem = document.createElement(`button`)
-        addItem.setAttribute(`project-index`, index)
+        addItem.setAttribute(`project-index`, projectIndex)
         addItem.classList.add(`add-item`)
         addItem.textContent = `+Item`
         projectContainer.appendChild(addItem)
 
         const deleteProject = document.createElement(`button`)
-        deleteProject.setAttribute(`project-index`, index)
+        deleteProject.setAttribute(`project-index`, projectIndex)
         deleteProject.classList.add(`project-delete`)
         deleteProject.textContent = `Delete Project`
         projectContainer.appendChild(deleteProject)
 
         // Iterates through each project object's itemArray which contains the project's todos and then posts each todo property to the webpage.
-        e.itemArray.forEach((e, index) => {
+        e.itemArray.forEach((e, itemIndex) => {
             const itemTitle = document.createElement(`div`)
-            itemTitle.setAttribute(`item-index`, index)
+            itemTitle.setAttribute(`item-index`, itemIndex)
             itemTitle.classList.add(`item-title`)
             itemTitle.textContent = e.title
             itemContainer.appendChild(itemTitle)
 
             if (e.description !== ``) {
                 const itemDesc = document.createElement(`div`)
-                itemDesc.setAttribute(`item-index`, index)
+                itemDesc.setAttribute(`item-index`, itemIndex)
                 itemDesc.classList.add(`item-description`)
                 itemDesc.textContent = `Description: ${e.description}`
                 itemContainer.appendChild(itemDesc)
@@ -71,7 +78,7 @@ export const display = () => {
             
             if (e.dueDate !== ``) {
                 const itemDue = document.createElement(`div`)
-                itemDue.setAttribute(`item-index`, index)
+                itemDue.setAttribute(`item-index`, itemIndex)
                 itemDue.classList.add(`item-dueDate`)
                 itemDue.textContent = `Due Date: ${e.dueDate}`
                 itemContainer.appendChild(itemDue)
@@ -79,7 +86,7 @@ export const display = () => {
 
             if (e.priority !== ``) {
                 const itemPriority = document.createElement(`div`)
-                itemPriority.setAttribute(`item-index`, index)
+                itemPriority.setAttribute(`item-index`, itemIndex)
                 itemPriority.classList.add(`item-priority`)
                 itemPriority.textContent = `Priority: ${e.priority}`
                 itemContainer.appendChild(itemPriority)
@@ -87,21 +94,42 @@ export const display = () => {
 
             if (e.notes !== ``) {
                 const itemNotes = document.createElement(`div`)
-                itemNotes.setAttribute(`item-index`, index)
+                itemNotes.setAttribute(`item-index`, itemIndex)
                 itemNotes.classList.add(`item-notes`)
                 itemNotes.textContent = `Notes: ${e.notes}`
                 itemContainer.appendChild(itemNotes)
             }
 
             const itemDelete = document.createElement(`button`)
-            itemDelete.setAttribute(`item-index`, index)
+            itemDelete.setAttribute(`item-index`, itemIndex)
+            itemDelete.setAttribute(`project-index`, projectIndex)
             itemDelete.classList.add(`item-delete`)
             itemDelete.textContent = `Delete Item`
             itemContainer.appendChild(itemDelete)
         })
     })
+    // Hides all project items
+    const itemContainerNode = document.querySelectorAll(`.item-container`)
+    itemContainerNode.forEach((e) => {
+        e.style.display = `none`
+    })
 }
 display()
+
+// Displays the project item(s) that was just manipulated
+const displayCurrent = (event) => {
+    const projectIndex = event.target.getAttribute(`project-index`)
+    const itemContainerNode = document.querySelectorAll(`.item-container`)
+    // Iterates through node list of item-containers until we reach the one we clicked on then executes our dropdown style change.
+    itemContainerNode.forEach((e) => {
+        if (e.getAttribute(`project-index`) === projectIndex){
+            e.style.display  = `flex`
+        }
+        else {
+            e.style.display = `none`
+        }
+    })
+}
 
 // When project/item form is submitted/cancelled out we run this function. Created this so that if future form cancel/submit logic needs to be changed it can all be done right here
 const formOpenOrExit = (formContainer, addOrRemove) => {
@@ -157,6 +185,7 @@ document.addEventListener(`click`, (event) => {
         // We use the previously created button value to tell addTodo() which project we are adding a todo item to.
         addTodo(projectIndex, projectArray)
         display()
+        displayCurrent(event)
         formOpenOrExit(itemFormContainer, `remove`)
     }
 })
@@ -164,6 +193,7 @@ document.addEventListener(`click`, (event) => {
     if (event.target.classList.contains(`item-delete`)) {
         deleteTodo(event, projectArray)
         display()
+        displayCurrent(event)
     }
 })
 document.querySelector(`.item-cancel`).addEventListener(`click`, () => {
@@ -175,16 +205,14 @@ document.querySelector(`.item-cancel`).addEventListener(`click`, () => {
 document.addEventListener(`click`, (event) => {
     if (event.target.classList.contains(`project-title`)) {
         const projectIndex = event.target.getAttribute(`project-index`)
-        const itemContainer = document.querySelectorAll(`.item-container`)
+        const itemContainerNode = document.querySelectorAll(`.item-container`)
         // Iterates through node list of item-containers until we reach the one we clicked on then executes our dropdown style change.
-        itemContainer.forEach((e) => {
+        itemContainerNode.forEach((e) => {
             if (e.getAttribute(`project-index`) === projectIndex){
-                if (e.style.display === `none`) {
-                    e.style.display = `flex`
-                }
-                else {
-                    e.style.display = `none`
-                }
+                e.style.display  = `flex`
+            }
+            else {
+                e.style.display = `none`
             }
         })
     }
