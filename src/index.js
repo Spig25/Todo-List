@@ -8,8 +8,8 @@ const content = document.querySelector(`.content`)
 const projectFormContainer = document.querySelector(`.project-form-container`)
 const itemFormContainer = document.querySelector(`.item-form-container`)
 const view = document.querySelector(`.view`)
-const invalidEntry = document.querySelectorAll(`.invalid`)
-console.log(invalidEntry.item(1))
+const invalidProject = document.querySelector(`#invalid-project`)
+const invalidItem = document.querySelector(`#invalid-item`)
 
 const defaultProject = projectFactory(`Starting List`)
 let projectArray = [defaultProject]
@@ -33,7 +33,7 @@ export const display = () => {
             const titleText = document.createElement(`div`)
             titleText.setAttribute(`project-index`, projectIndex)
             titleText.classList.add(`project-title`)
-            titleText.textContent = `${e.title} - ${e.itemArray.length} items`
+            titleText.textContent = `${e.title} - ${e.itemArray.length}`
             projectTitle.appendChild(titleText)
             // const dropdown = document.createElement(`img`)
             // dropdown.src = `../src/noun-down-arrow-1786976.png`
@@ -95,6 +95,17 @@ export const display = () => {
                 itemPriority.classList.add(`item-priority`)
                 itemPriority.textContent = `Priority: ${e.priority}`
                 itemContainer.appendChild(itemPriority)
+
+                if (e.priority === `High`) {
+                    itemPriority.style.color = `red`
+                    itemPriority.style.fontWeight = `bold`
+                }
+                if (e.priority === `Medium`) {
+                    itemPriority.style.color = `blue`
+                }
+                if (e.priority === `Low`) {
+                    itemPriority.style.color = `green`
+                }
             }
 
             if (e.notes !== ``) {
@@ -154,12 +165,12 @@ const formOpenOrExit = (formContainer, addOrRemove) => {
 
 
 document.querySelector(`.add-project`).addEventListener(`click`, () => {
-    invalidEntry.item(0).style.display = `none`
+    invalidProject.style.display = `none`
     formOpenOrExit(projectFormContainer, `add`)
 })
 document.querySelector(`.project-submit`).addEventListener(`click`, () => {
     if (document.getElementById(`project-title`).value === ``) {
-        invalidEntry.item(0).style.display = `grid`
+        invalidProject.style.display = `grid`
     }
     else {
         addProject(projectArray)
@@ -181,7 +192,7 @@ document.querySelector(`.project-cancel`).addEventListener(`click`, () => {
 // Adding item takes far more code than adding project because there is only one add project button vs many add item buttons. We need to be able to tell addTodo() which project we are adding an item to
 document.addEventListener(`click`, (event) => {
     if (event.target.classList.contains(`add-item`)) {
-        invalidEntry.item(1).style.display = `none`
+        invalidItem.style.display = `none`
         // Prevents add item button from being accessed with spacebar whilst inside of modal
         document.querySelector(`.add-item`).disabled = true
         formOpenOrExit(itemFormContainer, `add`)
@@ -200,7 +211,7 @@ document.addEventListener(`click`, (event) => {
         const projectIndex = button.getAttribute(`project-index`)
         
         if (document.getElementById(`item-title`).value === ``) {
-            invalidEntry.item(1).style.display = `grid`
+            invalidItem.style.display = `grid`
         }
         // We use the previously created button value to tell addTodo() which project we are adding a todo item to.
         else {

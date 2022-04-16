@@ -9,7 +9,7 @@
 <body>
     <div class="project-form-container">
         <form action="post" class="project-form">
-            <div class="invalid">Please enter a title!*</div>
+            <div class="invalid" id="invalid-project">Please enter a title!*</div>
             <button type="button" class="project-cancel">&times;</button>
             <label for="title">New Project Title: </label>
             <input type="text" name="title" id="project-title" required>
@@ -18,7 +18,7 @@
     </div>
     <div class="item-form-container">
         <form action="post" class="item-form">
-            <div class="invalid">Please enter a title!*</div>
+            <div class="invalid" id="invalid-item">Please enter a title!*</div>
             <button type="button" class="item-cancel">&times;</button>
             <label for="title">New To-do Title: </label>
             <input type="text" name="title" id="item-title">
@@ -27,7 +27,12 @@
             <label for="dueDate">Due Date: </label>
             <input type="date" name="dueDate" id="item-dueDate">
             <label for="priority">Priority: </label>
-            <input type="text" name="priority" id="item-priority">
+            <select name="priority" id="item-priority">Priority: 
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+            </select>
+            <!-- <input type="text" name="priority" id="item-priority"> -->
             <label for="notes">Notes: </label>
             <input type="text" name="notes" id="item-notes">
         </form>
