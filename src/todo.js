@@ -25,6 +25,11 @@ export const addProject = (projectArray) => {
     // newProj.itemArray = []
 }
 
+export const editProject = (event, projectArray) => {
+    const projectIndex = event.target.getAttribute(`project-index`)
+    projectArray[projectIndex].title = document.querySelector(`#project-title-edit`).value
+}
+
 export const deleteProject = (event, projectArray) => {
     const projectIndex = event.target.getAttribute(`project-index`)
     projectArray.splice(projectIndex, 1)

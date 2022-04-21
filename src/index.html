@@ -16,6 +16,14 @@
             <button type="button" class="project-submit">Submit</button>
         </form>
     </div>
+    <div class="project-form-edit-container">
+        <form action="post" class="project-form-edit">
+            <div class="invalid" id="invalid-project-edit">Please enter a title!*</div>
+            <button type="button" class="project-edit-cancel">&times;</button>
+            <label for="title">New Project Title: </label>
+            <input type="text" name="title" id="project-title-edit" required>
+        </form>
+    </div>
     <div class="item-form-container">
         <form action="post" class="item-form">
             <div class="invalid" id="invalid-item">Please enter a title!*</div>
@@ -23,16 +31,15 @@
             <label for="title">New To-do Title: </label>
             <input type="text" name="title" id="item-title">
             <label for="description">Description: </label>
-            <input type="text" name="description" id="item-description">
+            <textarea type="text" name="description" id="item-description"></textarea>
             <label for="dueDate">Due Date: </label>
             <input type="date" name="dueDate" id="item-dueDate">
             <label for="priority">Priority: </label>
             <select name="priority" id="item-priority">Priority: 
+                <option value="Normal">Normal</option>
                 <option value="High">High</option>
-                <option value="Medium">Medium</option>
                 <option value="Low">Low</option>
             </select>
-            <!-- <input type="text" name="priority" id="item-priority"> -->
             <label for="notes">Notes: </label>
             <input type="text" name="notes" id="item-notes">
         </form>

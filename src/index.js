@@ -1,14 +1,16 @@
 // This file will be used to manipulate DOM
 
 import './style.css';
-import { projectFactory, addTodo, addProject, deleteProject, deleteTodo } from './todo';
+import { projectFactory, addTodo, addProject, deleteProject, deleteTodo, editProject } from './todo';
 // import icon from `../src/noun-down-arrow-1786976.png`
 
 const content = document.querySelector(`.content`)
 const projectFormContainer = document.querySelector(`.project-form-container`)
+const projectFormEdit = document.querySelector(`.project-form-edit-container`)
 const itemFormContainer = document.querySelector(`.item-form-container`)
 const view = document.querySelector(`.view`)
 const invalidProject = document.querySelector(`#invalid-project`)
+const invalidProjectEdit = document.querySelector(`#invalid-project-edit`)
 const invalidItem = document.querySelector(`#invalid-item`)
 
 const defaultProject = projectFactory(`Starting List`)
@@ -39,6 +41,25 @@ export const display = () => {
             // dropdown.src = `../src/noun-down-arrow-1786976.png`
             // projectTitle.appendChild(dropdown)
 
+        const addItem = document.createElement(`button`)
+        addItem.setAttribute(`project-index`, projectIndex)
+        addItem.classList.add(`add-item`)
+        addItem.textContent = `+Item`
+        projectContainer.appendChild(addItem)
+
+        const editProject = document.createElement(`button`)
+        editProject.setAttribute(`project-index`, projectIndex)
+        editProject.classList.add(`project-edit-open`)
+        editProject.textContent = `Edit Project`
+        projectContainer.appendChild(editProject)
+        
+        const deleteProject = document.createElement(`button`)
+        deleteProject.setAttribute(`project-index`, projectIndex)
+        deleteProject.classList.add(`project-delete`)
+        deleteProject.textContent = `Delete Project`
+        projectContainer.appendChild(deleteProject)
+
+
         const itemContainer = document.createElement(`div`)
         itemContainer.setAttribute(`project-index`, projectIndex)
         itemContainer.classList.add(`item-container`)
@@ -49,18 +70,6 @@ export const display = () => {
         viewTitle.classList.add(`project-title`)
         viewTitle.textContent = e.title
         itemContainer.appendChild(viewTitle)
-
-        const addItem = document.createElement(`button`)
-        addItem.setAttribute(`project-index`, projectIndex)
-        addItem.classList.add(`add-item`)
-        addItem.textContent = `+Item`
-        projectContainer.appendChild(addItem)
-
-        const deleteProject = document.createElement(`button`)
-        deleteProject.setAttribute(`project-index`, projectIndex)
-        deleteProject.classList.add(`project-delete`)
-        deleteProject.textContent = `Delete Project`
-        projectContainer.appendChild(deleteProject)
 
         // Iterates through each project object's itemArray which contains the project's todos and then posts each todo property to the webpage.
         e.itemArray.forEach((e, itemIndex) => {
@@ -100,7 +109,7 @@ export const display = () => {
                     itemPriority.style.color = `red`
                     itemPriority.style.fontWeight = `bold`
                 }
-                if (e.priority === `Medium`) {
+                if (e.priority === `Normal`) {
                     itemPriority.style.color = `blue`
                 }
                 if (e.priority === `Low`) {
@@ -159,6 +168,10 @@ const formOpenOrExit = (formContainer, addOrRemove) => {
             // Each time item modal is displayed, a submit button is created. This makes sure it is deleted upon modal closure. This ensures that we dont keep adding submit buttons onto the modal infinitely.
             document.querySelector(`.item-submit`).remove()
         }
+        if (formContainer === projectFormEdit) {
+            // Each time item modal is displayed, a submit button is created. This makes sure it is deleted upon modal closure. This ensures that we dont keep adding submit buttons onto the modal infinitely.
+            document.querySelector(`.project-edit-submit`).remove()
+        }
     }
 }
 
@@ -179,6 +192,40 @@ document.querySelector(`.project-submit`).addEventListener(`click`, () => {
     }
     
 })
+
+// Project Edit WIP
+document.addEventListener(`click`, (event) => {
+    if (event.target.classList.contains(`project-edit-open`)) {
+        invalidProjectEdit.style.display = `none`
+        document.querySelector(`.project-edit-open`).disabled = true
+        formOpenOrExit(projectFormEdit, `add`)
+        
+        const button = document.createElement(`button`)
+        button.classList.add(`project-edit-submit`)
+        button.textContent = `Submit`
+        button.type = `button`
+
+        button.setAttribute(`project-index`, event.target.getAttribute(`project-index`))
+        document.querySelector(`.project-form-edit`).appendChild(button)
+    }
+})
+document.addEventListener(`click`, (event) => {
+    if (event.target.classList.contains(`project-edit-submit`)) {
+        if (document.getElementById(`project-title-edit`).value === ``) {
+            invalidProjectEdit.style.display = `grid`
+        }
+        else {
+            editProject(event, projectArray)
+            formOpenOrExit(projectFormEdit, `remove`)
+            display()
+        }
+    }
+})
+document.querySelector(`.project-edit-cancel`).addEventListener(`click`, () => {
+    formOpenOrExit(projectFormEdit, `remove`)
+    document.querySelector(`.project-edit-open`).disabled = false
+})
+
 document.addEventListener(`click`, (event) => {
     if (event.target.classList.contains(`project-delete`)) {
         deleteProject(event, projectArray)
@@ -196,10 +243,12 @@ document.addEventListener(`click`, (event) => {
         // Prevents add item button from being accessed with spacebar whilst inside of modal
         document.querySelector(`.add-item`).disabled = true
         formOpenOrExit(itemFormContainer, `add`)
+        
         const button = document.createElement(`button`)
         button.classList.add(`item-submit`)
         button.textContent = `Submit`
         button.type = `button`
+
         // We pass the project index value on from the add-item button to the newly created item-submit button.
         button.setAttribute(`project-index`, event.target.getAttribute(`project-index`))
         document.querySelector(`.item-form`).appendChild(button)
