@@ -41,13 +41,22 @@ export const addTodo = (projectIndex, projectArray) => {
     selectedProject.itemArray.push(newItem)
 }
 
+export const editTodo = (projectIndex, projectArray, itemIndex) => {
+    const selectedProject = projectArray[projectIndex]
+    selectedProject.itemArray[itemIndex].title = document.querySelector(`#item-title-edit`).value
+    selectedProject.itemArray[itemIndex].description = document.querySelector(`#item-description-edit`).value
+    selectedProject.itemArray[itemIndex].dueDate = document.querySelector(`#item-dueDate-edit`).value
+    selectedProject.itemArray[itemIndex].priority = document.querySelector(`#item-priority-edit`).value
+    selectedProject.itemArray[itemIndex].notes = document.querySelector(`#item-notes-edit`).value
+}
+
 export const deleteTodo = (event, projectArray) => {
-     // We go up parent elements from the delete button to select the project index div and get its correlated project index position
-     const projectIndex = event.target.parentElement.getAttribute(`project-index`)
-     // We select the delete button to get its correlated item index posiition
-     const itemIndex = event.target.getAttribute(`item-index`)
-     // Then we select the correct project object inside the project array
-     const selectedProject = projectArray[projectIndex]
-     // Finally we access the itemArray inside of the correct project and splice out the Todo item
-     selectedProject.itemArray.splice(itemIndex, 1)
+    // We go up parent elements from the delete button to select the project index div and get its correlated project index position
+    const projectIndex = event.target.parentElement.getAttribute(`project-index`)
+    // We select the delete button to get its correlated item index posiition
+    const itemIndex = event.target.getAttribute(`item-index`)
+    // Then we select the correct project object inside the project array
+    const selectedProject = projectArray[projectIndex]
+    // Finally we access the itemArray inside of the correct project and splice out the Todo item
+    selectedProject.itemArray.splice(itemIndex, 1)
 }

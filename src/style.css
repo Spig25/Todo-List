@@ -62,7 +62,8 @@ footer {
     font-size: 1.25rem;
 }
 
-.item-delete {
+.item-delete,
+.item-edit-open {
     align-self: flex-start;
 }
 
@@ -80,7 +81,8 @@ footer {
 
 .project-form-container,
 .item-form-container,
-.project-form-edit-container {
+.project-form-edit-container,
+.item-form-edit-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -97,7 +99,8 @@ footer {
 
 .project-form-container.show,
 .item-form-container.show,
-.project-form-edit-container.show {
+.project-form-edit-container.show,
+.item-form-edit-container.show {
     opacity: 1;
     pointer-events: auto;
 }
@@ -126,7 +129,7 @@ button {
     font-weight: bold;
 }
 
-#item-description {
+textarea {
     height: 100px;
     resize: none;
 }
@@ -139,7 +142,8 @@ button {
 
 .item-cancel,
 .project-cancel,
-.project-edit-cancel {
+.project-edit-cancel,
+.item-edit-cancel {
     display: grid;
     grid-column: 2;
     justify-self: right;
@@ -151,7 +155,8 @@ button {
 
 .item-submit,
 .project-submit,
-.project-edit-submit {
+.project-edit-submit,
+.item-edit-submit {
     grid-column: span 2;
     place-self: center;
 }

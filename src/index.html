@@ -35,13 +35,33 @@
             <label for="dueDate">Due Date: </label>
             <input type="date" name="dueDate" id="item-dueDate">
             <label for="priority">Priority: </label>
-            <select name="priority" id="item-priority">Priority: 
-                <option value="Normal">Normal</option>
+            <select name="priority" id="item-priority">
+                <option selected value="Normal" class="selected">Normal</option>
                 <option value="High">High</option>
                 <option value="Low">Low</option>
             </select>
             <label for="notes">Notes: </label>
             <input type="text" name="notes" id="item-notes">
+        </form>
+    </div>
+    <div class="item-form-edit-container">
+        <form action="post" class="item-form-edit">
+            <div class="invalid" id="invalid-item-edit">Please enter a title!*</div>
+            <button type="button" class="item-edit-cancel">&times;</button>
+            <label for="title">New To-do Title: </label>
+            <input type="text" name="title" id="item-title-edit">
+            <label for="description">Description: </label>
+            <textarea type="text" name="description" id="item-description-edit"></textarea>
+            <label for="dueDate">Due Date: </label>
+            <input type="date" name="dueDate" id="item-dueDate-edit">
+            <label for="priority">Priority: </label>
+            <select name="priority" id="item-priority-edit">
+                <option selected value="Normal" class="selected-edit">Normal</option>
+                <option value="High">High</option>
+                <option value="Low">Low</option>
+            </select>
+            <label for="notes">Notes: </label>
+            <input type="text" name="notes" id="item-notes-edit">
         </form>
     </div>
     <header>
