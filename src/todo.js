@@ -42,12 +42,11 @@ export const addTodo = (projectIndex, projectArray) => {
 }
 
 export const editTodo = (projectIndex, projectArray, itemIndex) => {
-    const selectedProject = projectArray[projectIndex]
-    selectedProject.itemArray[itemIndex].title = document.querySelector(`#item-title-edit`).value
-    selectedProject.itemArray[itemIndex].description = document.querySelector(`#item-description-edit`).value
-    selectedProject.itemArray[itemIndex].dueDate = document.querySelector(`#item-dueDate-edit`).value
-    selectedProject.itemArray[itemIndex].priority = document.querySelector(`#item-priority-edit`).value
-    selectedProject.itemArray[itemIndex].notes = document.querySelector(`#item-notes-edit`).value
+    projectArray[projectIndex].itemArray[itemIndex].title = document.querySelector(`#item-title-edit`).value
+    projectArray[projectIndex].itemArray[itemIndex].description = document.querySelector(`#item-description-edit`).value
+    projectArray[projectIndex].itemArray[itemIndex].dueDate = document.querySelector(`#item-dueDate-edit`).value
+    projectArray[projectIndex].itemArray[itemIndex].priority = document.querySelector(`#item-priority-edit`).value
+    projectArray[projectIndex].itemArray[itemIndex].notes = document.querySelector(`#item-notes-edit`).value
 }
 
 export const deleteTodo = (event, projectArray) => {

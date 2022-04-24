@@ -225,6 +225,10 @@ document.querySelector(`.project-submit`).addEventListener(`click`, () => {
 
 document.addEventListener(`click`, (event) => {
     if (event.target.classList.contains(`project-edit-open`)) {
+        const projectIndex = event.target.getAttribute(`project-index`)
+
+        document.querySelector(`#project-title-edit`).value = projectArray[projectIndex].title
+
         invalidProjectEdit.style.display = `none`
         document.querySelector(`.project-edit-open`).disabled = true
         formOpenOrExit(projectFormEdit, `add`)
@@ -234,7 +238,7 @@ document.addEventListener(`click`, (event) => {
         button.textContent = `Submit`
         button.type = `button`
 
-        button.setAttribute(`project-index`, event.target.getAttribute(`project-index`))
+        button.setAttribute(`project-index`, projectIndex)
         document.querySelector(`.project-form-edit`).appendChild(button)
     }
 })
@@ -274,6 +278,9 @@ document.querySelector(`.project-cancel`).addEventListener(`click`, () => {
 // Adding item takes far more code than adding project because there is only one add project button vs many add item buttons. We need to be able to tell addTodo() which project we are adding an item to
 document.addEventListener(`click`, (event) => {
     if (event.target.classList.contains(`add-item`)) {
+        // Make priority default to normal
+        document.querySelector(`#item-priority`).value = `Normal`
+
         displayCurrent(event)
         invalidItem.style.display = `none`
         // Prevents add item button from being accessed with spacebar whilst inside of modal
@@ -313,6 +320,16 @@ document.addEventListener(`click`, (event) => {
 // Edit item WIP
 document.addEventListener(`click`, (event) => {
     if (event.target.classList.contains(`item-edit-open`)) {
+        const projectIndex = event.target.getAttribute(`project-index`)
+        const itemIndex = event.target.getAttribute(`item-index`)
+
+        // Updates the form values to match the values of the item that is currently being edited
+        document.querySelector(`#item-title-edit`).value = projectArray[projectIndex].itemArray[itemIndex].title
+        document.querySelector(`#item-description-edit`).value = projectArray[projectIndex].itemArray[itemIndex].description
+        document.querySelector(`#item-dueDate-edit`).value = projectArray[projectIndex].itemArray[itemIndex].dueDate
+        document.querySelector(`#item-priority-edit`).value = projectArray[projectIndex].itemArray[itemIndex].priority
+        document.querySelector(`#item-notes-edit`).value = projectArray[projectIndex].itemArray[itemIndex].notes
+
         invalidItemEdit.style.display = `none`
         document.querySelector(`.item-edit-open`).disabled = true
         formOpenOrExit(itemFormEdit, `add`)
@@ -323,8 +340,8 @@ document.addEventListener(`click`, (event) => {
         button.type = `button`
 
         // Trying to figure set up edit button properly. Needs to have appropriate info for the editTodo() to import so it targets the correct item in the correct project
-        button.setAttribute(`project-index`, event.target.getAttribute(`project-index`))
-        button.setAttribute(`item-index`, event.target.getAttribute(`item-index`))
+        button.setAttribute(`project-index`, projectIndex)
+        button.setAttribute(`item-index`, itemIndex)
         document.querySelector(`.item-form-edit`).appendChild(button)
     }
 })
